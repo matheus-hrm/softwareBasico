@@ -1,15 +1,18 @@
 #include <stdio.h>
 
+#pragma pack(1)
 struct X {
 
   int   a;
-  int   c;
   short b;
+  int   c;
   
-
 };
+
+#pragma 
+
 //       campos: a           b       c
-struct X varx = {0xA1A2A3A4, 0xC1C2C3C4, 0xB1B2};
+struct X varx = {0xA1A2A3A4,0xB1B2,0xC1C2C3C4,};
 
 void dump(void *p, int n) {
   unsigned char *p1 = p;
