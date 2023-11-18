@@ -16,13 +16,13 @@ extern unsigned int ui;
 
 extern unsigned long ul;
 
-void sec();
+void foo();
 
 int main()
 
 {
 
-    sec();
+    foo();
 
     printf("c  = %d\n", c);
 

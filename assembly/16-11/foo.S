@@ -31,9 +31,9 @@ ul: .quad 2048
 .text
 
 
-.globl main
+.globl foo
 
-main:
+foo:
 
 
     # Se necessário, usar apenas os registradores (ou suas variações) abaixo:
@@ -77,6 +77,14 @@ main:
         
     movq $l, %rcx
     movq $128, (%rcx)
+
+    # j = j + *iptr
+
+    movl $i, %edx
+    movl (%edx), %eax
+    addl j, %eax
+    movl %eax, j
+    
 
     leave
 

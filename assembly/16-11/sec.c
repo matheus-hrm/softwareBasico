@@ -8,7 +8,7 @@ unsigned short us = 111;
 unsigned int ui = 1024;
 unsigned long ul = 2048;
 
-void sec()
+void foo()
 {
     // Atribuições simples
 
