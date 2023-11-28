@@ -25,13 +25,20 @@ loop:
     jge fim
 
     movq $values, %r8  # tmp = values[i]
-    movslq %ecx, %rcx   # j = (long) i
+    movslq %eax, %rcx   # j = (long) i
     imulq $8, %rcx      # j *= 8
-    addq %rcx, %rax     # values + j
-    movq (%rax), %rdx   # values[i] = values[j]
-    movq %rdx, values
+    addq %rcx, %r8      # tmp += j
+    movq (%r8), %rdx    # tmp = values[i]  
+    
+    movq $values, %r11   # values[i] = values[j]
+    movslq %ecx, %rcx   # j = (long) i 
+    imulq $8, %rcx      # j *= 8
+    addq %rcx, %r11      # values += j
+    movq (%r11), %r9     # values[i] = values[j]
+    
+    
+    movq (%rdx),%r11      # values[j] = tmp
 
-    movq (%r8), %rdx     # values[j] = tmp
     
     addl $1, %eax       # i++
     subl $1, %ecx       # j--
