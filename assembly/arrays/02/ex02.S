@@ -22,12 +22,12 @@ ex02:
     
     movl $0, %ecx
     
-loop:
     movq $letters, %rax
     movl %ecx, %r9d
     imulq $1, %r9
     addq %rax, %r9
-
+    
+loop:
     cmpb $0, (%r9)
     je end
 

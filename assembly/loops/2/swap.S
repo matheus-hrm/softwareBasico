@@ -17,39 +17,41 @@ swap:
     pushq  %rbp
     movq   %rsp, %rbp
 
-    movl  $0, %eax
-    movl  $4, %ecx
-
+    #j = 4
+    movl $4, %r9d
+    movl $0, %r8d
 loop:
-    cmpl  %ecx, %eax
+    cmpl  %r9d, %r8d
     jge fim
 
-    movq $values, %r8  # tmp = values[i]
-    movslq %eax, %rcx   # j = (long) i
-    imulq $8, %rcx      # j *= 8
-    addq %rcx, %r8      # tmp += j
-    movq (%r8), %rdx    # tmp = values[i]  
-    
-    movq $values, %r11   # values[i] = values[j]
-    movslq %ecx, %rcx   # j = (long) i 
-    imulq $8, %rcx      # j *= 8
-    addq %rcx, %r11      # values += j
-    movq (%r11), %r9     # values[i] = values[j]
-    
-    
-    movq (%rdx),%r11      # values[j] = tmp
+    movq $values, %rdx  # tmp = values[i]
+    movslq %r8d, %rcx   # rcx = (long) i
+    imulq $8, %rcx      # rcx 8*i
+    addq %rdx,%rcx      # tmp += j
+    movq (%rcx), %r10    # tmp = values[i]  
 
+    movq %rcx, %rax    # values[i] = values[j]
+
+    movq $values, %rdx   # values[i] = values[j]
+    movslq %r9d, %rcx   # j = (long) i 
+    imulq $8, %rcx      # j *= 8
+    addq %rdx, %rcx      # values += j
+    movq (%rcx), %r11     # values[i] = values[j]
     
-    addl $1, %eax       # i++
-    subl $1, %ecx       # j--
+    
+    movq %r11, (%rax)     # values[j] = tmp
+
+    movq %r10, (%rcx)     # values[j] = tmp
+    incl %r8d
+    decl %r9d
     jmp loop
 fim:
 
     movq $values, %rax
     movq $4 , %rcx
     imulq $8, %rcx
-    addq %rcx, %rax
-    movq (%rax), %rdx
+    addq %rax, %rcx
+    movq (%rcx), %rdx
     movq %rdx, last
 
     leave
