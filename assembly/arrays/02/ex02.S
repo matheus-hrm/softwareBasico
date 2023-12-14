@@ -1,4 +1,4 @@
-.data
+d.data
 
 .globl letters
 .align 1
@@ -32,25 +32,25 @@ loop:
     je end
 
     movl %ecx, %eax
-    incl %ecx
 
     movq $letters, %r8
     movl %ecx, %r9d
     imulq $1, %r9
     addq %r8, %r9
     
+    incl %ecx
     # letters[count++] & 1
-
-    testb $1, (%r9) 
+    movzbl (%r9), %eax
+    inc %r9
+    test $1, %eax
     jz else
 
-    incl even
-    jmp end
-else:
     incl odd
-end:
     jmp loop
-    
+else:
+    incl even
+    jmp loop
+end:
     leave
 
     ret
