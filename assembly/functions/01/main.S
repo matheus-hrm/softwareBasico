@@ -1,53 +1,34 @@
-.section .rodata
-
-.data
-
+.section .data
 .globl val
 val: .long 432
-
 .globl age
 age: .word 4
-
 .globl r
 r: .long 0
-
 .globl err
 err: .quad 2048
 
-
-.text
-
-
+.section .text
 .globl main
-
 main:
-
    pushq %rbp
-
    movq  %rsp, %rbp
-   
-   
 
-   # Seu código aqui...
-   
    movq $str, %rdi
-   movl val, %esi
-   movw age, %dx
-   movq r, %rcx
+   movl val(%rip), %esi
+   movw age(%rip), %dx
+   movq $r, %rcx
+   call sum
 
-   call sum #sum("Hello", val, age, err)
-   movq %rax, val 
-   # Faça o "return"
+   # Chamada para a função show
+   movq err(%rip), %rdi
+   movl val(%rip), %esi
+   movl r(%rip), %edx
+   call show
 
-   movq err, %rdi
-   movq val, %rsi 
-   movq r, %rdx
-   call show #show(err, val, r)
-   
+   # Retorno da função main
    movl $0, %eax
-
    leave
-
    ret
 
 .section .rodata
