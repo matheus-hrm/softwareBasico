@@ -18,8 +18,8 @@ loop:
     jge end
     
     movq %rdi, -8(%rbp)
-    movq $rcx, -16(%rbp)
-    movq $r8,  -24(%rbp)
+    movq %rcx, -16(%rbp)
+    movq %r8,  -24(%rbp)
 
     movq $fmt, %rdi
     
