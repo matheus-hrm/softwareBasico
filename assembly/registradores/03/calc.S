@@ -30,9 +30,10 @@ calc:
     movq $0, %r10 // long sum
 
 loop:
-    cmpl %ebx, -12(%rbp)
-    jle L1
-    movq -8(%rbp), %rax 
+    cmpl -12(%rbp), %ebx
+    jge L1
+    movl -8(%rbp), %eax // vet
+    movq (%rax), %rax // vet[0]
     movl %ebx, %r12d // i
     movl %ebx, %edx // salva i em edx
     movslq %edx, %rdx // converte i para long
@@ -43,7 +44,7 @@ loop:
     movq -24(%rbp), %rdx // max
     movw (%rdx), %dx // max
 
-    cmpw %ax, %dx // vet[i] > max
+    cmpw %dx, %ax // vet[i] > max
     jge endif
     movw %ax, (%rdx) // max = vet[i]
 endif:
@@ -53,6 +54,7 @@ endif:
     movl %r12d, %esi // i
     movq %r10, %rcx // sum
     movq $calcfmt, %rdi // calcfmt
+    movl $0, %eax // 0
     call printf
     addl $1, %ebx // i++
     jmp loop
@@ -84,6 +86,7 @@ main:
     call calc
     movq %rax, %rdi // retorno
     movq $mainfmt, %rsi // mainfmt
+    movl $0, %eax // 0
     call printf
 
     movq $0, %rax

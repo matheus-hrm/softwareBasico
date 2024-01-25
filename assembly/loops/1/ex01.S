@@ -29,7 +29,7 @@ ex01:
         addq %rcx, %rdi   # rcx = nums + i * sizeOf
     
         movl (%rdi), %ebx # ebx = nums[i]
-        addl %ebx, s 
+        addl %ebx, s +
         incl %eax
         jmp loop
     fim:
